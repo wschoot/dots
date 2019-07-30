@@ -2,14 +2,23 @@
 - hosts: localhost
   become: true
   tasks:
-    - name: deps
+    - name: Packages CentOS/RHEL
       package:
         name:
           - epel-release
+          - python2-pip
+          - bind-utils
         state: present
       when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
-    - name: deps
+    - name: Packages Ubuntu
+      package:
+        name:
+          - python-pip
+        state: present
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Packages
       package:
         name:
           - git
@@ -23,6 +32,10 @@
           - wget
           - curl
         state: present
+
+    - name: install pip resources
+      pip:
+        name: ansible-lint
 
 # USER stuff
 - hosts: localhost
