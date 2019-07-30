@@ -1,0 +1,41 @@
+[user]
+  email = {{ gitemail }}
+  name = {{ gitname }}
+
+[push]
+  default = matching
+
+[branch]
+  autosetuprebase = always
+
+[alias]
+  br = branch -vv
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  up = !git pull --rebase --autostash && git submodule update
+  root = !pwd
+  st = status
+  co = checkout
+  tree = log --graph --decorate --pretty=oneline --abbrev-commit
+
+[color]
+  ui = true
+
+[core]
+  editor = vim
+
+[color "diff"]
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  meta = 227
+  commit = 227 bold
+  whitespace = red reverse
+
+[color "diff-highlight"]
+  oldNormal = red bold
+  newNormal = green bold
+  oldHighlight = red bold 52
+  newHighlight = green bold 22
+
+[core]
+  pager = diff-so-fancy | less --tabs=4 -RFX

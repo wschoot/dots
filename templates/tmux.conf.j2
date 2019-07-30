@@ -1,0 +1,57 @@
+# Tmux
+set-option -g prefix C-a
+set-option -g set-titles on
+bind-key a send-prefix
+bind-key C-space next-window
+bind-key C-c new-window
+bind-key C-d detach
+bind-key C-a last-window
+# clock
+set -g clock-mode-colour cyan
+set -g clock-mode-style 24
+## Ewoud
+# 0 is too far ;-)
+set -g base-index 1
+
+# Niet meer nodig https://github.com/tmux/tmux/issues/230
+#set-option -g status-utf8 on
+#set-window-option -g utf8 on
+
+# Upon starting to use tmux, I noticed that I had to add a noticeable delay
+# between two characters in a command sequence for it to recognize the command,
+# for example between the C-a and n in C-a n. This is because tmux is waiting
+# for an escape sequence. Fix that by setting escape time to zero.
+set -g escape-time 0
+## status bar
+# all
+set -g status-fg white
+set -g status-bg blue
+# left
+set -g status-left '#S'
+set -g status-right '%a %b %d, %Y %H:%M'
+## window options
+# color
+set-window-option -g window-status-current-fg white
+set-window-option -g window-status-current-bg black
+# auto rename
+#set -g automatic-rename
+#set allow-rename on
+#set-window-option -g allow-rename off
+set-window-option -g automatic-rename off
+bind r source-file ~/.tmux.conf
+
+# switch panes using Alt-arrow without prefix
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# split panes using | and -
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+set-window-option -g xterm-keys on
+
+# https://superuser.com/a/326592
+set -g terminal-overrides 'xterm*:smcup@:rmcup@'

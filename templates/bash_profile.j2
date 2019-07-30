@@ -1,0 +1,91 @@
+#!/bin/bash
+export LC_ALL="en_US.UTF-8"
+#source bash-completion if it exists
+[ -f /usr/local/share/bash-completion/bash_completion ] && source /usr/local/share/bash-completion/bash_completion
+
+#source git-prompt and completion
+[ -f /usr/share/doc/git/contrib/completion/git-prompt.sh ] && source /usr/share/doc/git/contrib/completion/git-prompt.sh
+[ -f /usr/share/doc/git/contrib/completion/git-completion.bash ]  && source /usr/share/doc/git/contrib/completion/git-completion.bash
+
+#prompt setup
+export PS1='\[\e[01;32m\][\u\[\e[34;1m\] \w\[\e[1;35m\]$(__git_ps1 "(%s)")\[\e[34;1m\]]\$\[\e[m\] '
+
+#PS1 prompt without git completion
+#export PS1='\[\e[01;32m\][\u@\[\e[34;1m\]osx \w\[\e[1;35m\]\[\e[34;1m\]]\$\[\e[m\] '
+
+# add local and python bin dirs to path
+export PATH="$HOME/.bin/:$HOME/.local/bin/:$HOME/bin/:$PATH"
+
+#shorten paths to max 2
+export PROMPT_DIRTRIM=2
+
+export EDITOR='vim'
+
+#history settings
+export HISTFILESIZE=1000000
+export HISTSIZE=1000000
+export HISTTIMEFORMAT='%h %e %T '
+export HISTIGNORE='ls:ll:bg:fg:history'
+export HISTCONTROL=ignoredups
+
+#colors in man pages
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m' # end the info box
+export LESS_TERMCAP_so=$'\E[01;42;30m' # begin the info box
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+export GROFF_NO_SGR=1
+
+#less with more colors
+export LESS='-R'
+
+#packer settings
+export PACKER_LOG=1
+export PACKER_LOG_PATH=packer.log
+
+#prevent lpass-cli from exiting
+export LPASS_AGENT_TIMEOUT=0
+
+#aliases
+alias ack='ack --pager="less -FRSX"'
+alias ag='ag --pager="less -FRSX"'
+alias cp='cp -i'
+alias diff=colordiff
+alias gb="cd \$(git root)"
+alias goaccess='goaccess -p ~/.goaccessrc'
+alias http='http --all --follow --max-redirects=5 --headers --style monokai'
+alias ll="ls -la"
+alias ls="ls --color=auto"
+alias pdsh='pdsh -t 2'
+alias pwgen="pwgen 12"
+alias rm="rm -i"
+alias tree="tree -a -I '.git|.DS_Store'"
+
+export PYTHONSTARTUP=~/.pyrc
+
+function ssldate () {
+    openssl s_client -connect $1:443|openssl x509 -dates -noout
+}
+
+if [ -f "${HOME}/.gpg-agent-info" ]; then
+    . "${HOME}/.gpg-agent-info"
+    export GPG_AGENT_INFO
+fi
+
+function ssl_key_hash() { openssl rsa -noout -modulus -in "$@" | openssl md5 ;}
+function ssl_cert_hash() { openssl x509 -noout -modulus -in "$@" | openssl md5 ;}
+function ssl_csr_hash() { openssl req -noout -modulus -in "$@" | openssl md5 ;}
+
+# for user password
+alias userpw="grub-crypt --sha-512"
+
+stty -ixon
+
+set -- $SSH_CONNECTION
+if [[ $PS1 && $SSH_TTY && -z $TMUX && $1 != $3 && ! -r ~/.notmux ]]; then
+    (tmux attach || tmux new-session)
+    #test -z "$TMUX" && (tmux attach -t0 || tmux new-session)
+fi
+source ~/.git-prompt.sh
