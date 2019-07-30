@@ -6,7 +6,7 @@
       package:
         name:
           - epel-release
-          - python2-pip
+          - /usr/bin/pip
           - bind-utils
         state: present
       when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
