@@ -80,9 +80,9 @@ alias userpw="grub-crypt --sha-512"
 
 stty -ixon
 
-set -- $SSH_CONNECTION
-if [[ $PS1 && $SSH_TTY && -z $TMUX && $1 != $3 && ! -r ~/.notmux ]]; then
-    (tmux attach || tmux new-session)
+#set -- $SSH_CONNECTION
+#if [[ $PS1 && $SSH_TTY && -z $TMUX && $1 != $3 && ! -r ~/.notmux ]]; then
+#    (tmux attach || tmux new-session)
     #test -z "$TMUX" && (tmux attach -t0 || tmux new-session)
-fi
+#fi
 source ~/.git-prompt.sh
