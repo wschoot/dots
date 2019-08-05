@@ -23,11 +23,6 @@
         path: ~/.dotfiles
         state: directory
 
-    - name: gitprompt.sh
-      copy:
-        src: files/git-prompt.sh
-        dest: ~/.git-prompt.sh
-
     - name: gitconfig
       template:
         src: templates/gitconfig.j2
@@ -69,7 +64,14 @@
         src: templates/bash_profile.j2
         dest: ~/.dotfiles/bash_profile
 
+    - name: symlink bashrc
+      file:
+        src: ~/.dotfiles/bash_profile
+        dest: ~/.bashrc
+        state: link
+        force: yes
     - name: symlink bash_profile
+
       file:
         src: ~/.dotfiles/bash_profile
         dest: ~/.bash_profile

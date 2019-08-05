@@ -7,9 +7,6 @@ export LC_ALL="en_US.UTF-8"
 [ -f /usr/share/doc/git/contrib/completion/git-prompt.sh ] && source /usr/share/doc/git/contrib/completion/git-prompt.sh
 [ -f /usr/share/doc/git/contrib/completion/git-completion.bash ]  && source /usr/share/doc/git/contrib/completion/git-completion.bash
 
-#prompt setup
-export PS1="\[\e]0;\u@\h \w\a\]\[\e]0;\u@\h \w\a\]\[\e[01;32m\][\u@\h\[\e[34;1m\] \w\[\e[1;35m\]$(__git_ps1 "(%s)")\[\e[34;1m\]]\$\[\e[m\] "
-
 # add local and python bin dirs to path
 export PATH="$HOME/.bin/:$HOME/.local/bin/:$HOME/bin/:$PATH"
 
@@ -85,4 +82,14 @@ stty -ixon
 #    (tmux attach || tmux new-session)
     #test -z "$TMUX" && (tmux attach -t0 || tmux new-session)
 #fi
-source ~/.git-prompt.sh
+determine_git_branch () {
+  type git > /dev/null 2>&1 || return 0
+  local GIT_BRANCH="$(git symbolic-ref --short -q HEAD 2> /dev/null || true)"
+  [ -n "$GIT_BRANCH" ] || return 0
+  if [ -z "$(git status --porcelain || true)" ]; then
+    echo -n $' \e[01;32m'"$GIT_BRANCH"
+  else
+    echo -n $' \e[01;31m'"$GIT_BRANCH"
+  fi
+}
+PS1='\[\e[00;34m\][\[\e[00;32m\]\u\[\e[00;36m\]@\[\e[00;32m\]\h${debian_chroot:+($debian_chroot)}\[\e[00;036m\]:\[\e[00;33m\]\w$(determine_git_branch)\[\e[00;34m\]]\[\e[00;36m\]\$\[\e[00m\] '
