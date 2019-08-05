@@ -1,45 +1,45 @@
 [user]
-  email = {{ gitemail }}
-  name = {{ gitname }}
+email = {{ gitemail }}
+name = {{ gitname }}
 
 [push]
-  default = matching
-	recurseSubmodules = true
+default = matching
+recurseSubmodules = true
 
 [branch]
-  autosetuprebase = always
+autosetuprebase = always
 
 [alias]
-  br = branch -vv
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-  up = !git pull --rebase --autostash && git submodule update
-  root = !pwd
-  st = status
-  co = checkout
-  tree = log --graph --decorate --pretty=oneline --abbrev-commit
+br = branch -vv
+lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+up = !git pull --rebase --autostash && git submodule update
+root = !pwd
+st = status
+co = checkout
+tree = log --graph --decorate --pretty=oneline --abbrev-commit
 
 [color]
-  ui = true
+ui = true
 
 [core]
-  editor = vim
+editor = vim
 
 [color "diff"]
-  frag = magenta bold
-  old = red bold
-  new = green bold
-  meta = 227
-  commit = 227 bold
-  whitespace = red reverse
+frag = magenta bold
+old = red bold
+new = green bold
+meta = 227
+commit = 227 bold
+whitespace = red reverse
 
 [color "diff-highlight"]
-  oldNormal = red bold
-  newNormal = green bold
-  oldHighlight = red bold 52
-  newHighlight = green bold 22
+oldNormal = red bold
+newNormal = green bold
+oldHighlight = red bold 52
+newHighlight = green bold 22
 
 [fetch]
-	recurseSubmodules = true
+recurseSubmodules = true
 
 [submodule]
-	recurse = true
+recurse = true

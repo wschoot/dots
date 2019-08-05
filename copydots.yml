@@ -1,0 +1,82 @@
+---
+- hosts: localhost
+  become: false
+  gather_facts: no
+  vars_prompt:
+    - name: gitemail
+      prompt: 'What is your git email?'
+      default: "{{ lookup('ini', 'email section=user file=~/.gitconfig', errors='ignore', default='wouter@schoot.org') | default('wouter@schoot.org') }}"
+      private: no
+
+    - name: gitname
+      prompt: 'What is your git name?'
+      default: "{{ lookup('ini', 'name section=user file=~/.gitconfig', errors='ignore', default='Wouter Schoot') | default('Wouter Schoot') }}"
+      private: no
+
+  tasks:
+    - name: install pip resources
+      pip:
+        name: ansible-lint
+
+    - name: mkdir .dotfiles
+      file:
+        path: ~/.dotfiles
+        state: directory
+
+    - name: gitprompt.sh
+      copy:
+        src: files/git-prompt.sh
+        dest: ~/.git-prompt.sh
+
+    - name: gitconfig
+      template:
+        src: templates/gitconfig.j2
+        dest: ~/.dotfiles/gitconfig
+
+    - name: symlink gitconfig
+      file:
+        src: ~/.dotfiles/gitconfig
+        dest: ~/.gitconfig
+        state: link
+        force: yes
+
+    - name: vimrc
+      template:
+        src: templates/vimrc.j2
+        dest: ~/.dotfiles/vimrc
+
+    - name: symlink vimrc
+      file:
+        src: ~/.dotfiles/vimrc
+        dest: ~/.vimrc
+        state: link
+        force: yes
+
+    - name: tmux
+      template:
+        src: templates/tmux.conf.j2
+        dest: ~/.dotfiles/tmux.conf
+
+    - name: symlink tmux
+      file:
+        src: ~/.dotfiles/tmux.conf
+        dest: ~/.tmux.conf
+        state: link
+        force: yes
+
+    - name: bash_profile
+      template:
+        src: templates/bash_profile.j2
+        dest: ~/.dotfiles/bash_profile
+
+    - name: symlink bash_profile
+      file:
+        src: ~/.dotfiles/bash_profile
+        dest: ~/.bash_profile
+        state: link
+        force: yes
+
+    - name: run vim -r to prep the env
+      command: vim -r
+      args:
+        creates: ~/.vim
