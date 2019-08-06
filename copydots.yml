@@ -3,9 +3,14 @@
   become: false
   gather_facts: no
   vars_prompt:
+    - name: workemail
+      prompt: 'What is your work email?'
+      default: "{{ lookup('ini', 'email section=user file=~/.gitconfig', errors='ignore')  }}"
+      private: no
+
     - name: gitemail
       prompt: 'What is your git email?'
-      default: "{{ lookup('ini', 'email section=user file=~/.gitconfig', errors='ignore', default='wouter@schoot.org') | default('wouter@schoot.org') }}"
+      default: "{{ lookup('ini', 'email section=user file=~/.gitconfig', errors='ignore') }}"
       private: no
 
     - name: gitname

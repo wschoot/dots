@@ -72,6 +72,14 @@ function ssldate () {
     openssl s_client -connect $1:443|openssl x509 -dates -noout
 }
 
+function mw () {
+  echo $*|mail -r "{{ gitname }} <{{ gitemail }}>" -s "[m] $*" {{ workemail }}
+}
+
+function m () {
+  echo $*|mail -r "{{ gitname }} <{{ gitemail }}>" -s "[m] $*" {{ gitemail }}
+}
+
 if [ -f "${HOME}/.gpg-agent-info" ]; then
     . "${HOME}/.gpg-agent-info"
     export GPG_AGENT_INFO
