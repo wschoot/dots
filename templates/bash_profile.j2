@@ -99,7 +99,7 @@ fi
 
 determine_git_branch () {
   type git > /dev/null 2>&1 || return 0
-  local GIT_BRANCH="$(git symbolic-ref --short -q HEAD 2> /dev/null || true)"
+  local GIT_BRANCH="$(git describe --contains --all HEAD 2> /dev/null || true)"
   [ -n "$GIT_BRANCH" ] || return 0
   if [ -z "$(git status --porcelain || true)" ]; then
     echo -n $' \e[01;32m'"$GIT_BRANCH"

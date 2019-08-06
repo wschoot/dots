@@ -15,5 +15,5 @@ Fill in the variables for localhost, as shown in host_vars/localhost.yml
 To prevent commiting changes to this file:
 
 ```
-git update-index --assume-unchanged
+git update-index --assume-unchanged host_vars/localhost.yml
 ```
