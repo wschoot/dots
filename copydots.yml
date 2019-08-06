@@ -3,6 +3,11 @@
   become: false
   gather_facts: no
   vars_prompt:
+    - name: privateemail
+      prompt: 'What is your private email?'
+      default: "{{ lookup('ini', 'email section=user file=~/.gitconfig', errors='ignore')  }}"
+      private: no
+
     - name: workemail
       prompt: 'What is your work email?'
       default: "{{ lookup('ini', 'email section=user file=~/.gitconfig', errors='ignore')  }}"

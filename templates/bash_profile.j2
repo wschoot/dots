@@ -73,11 +73,11 @@ function ssldate () {
 }
 
 function mw () {
-  echo $*|mail -r "{{ gitname }} <{{ gitemail }}>" -s "[m] $*" {{ workemail }}
+  echo $*|mail -r "{{ gitname }} <{{ privateemail }}>" -s "[m] $*" {{ workemail }}
 }
 
 function m () {
-  echo $*|mail -r "{{ gitname }} <{{ gitemail }}>" -s "[m] $*" {{ gitemail }}
+  echo $*|mail -r "{{ gitname }} <{{ privateemail }}>" -s "[m] $*" {{ privateemail }}
 }
 
 if [ -f "${HOME}/.gpg-agent-info" ]; then
