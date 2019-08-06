@@ -2,27 +2,6 @@
 - hosts: localhost
   become: false
   gather_facts: no
-  vars_prompt:
-    - name: privateemail
-      prompt: 'What is your private email?'
-      default: "{{ lookup('ini', 'email section=user file=~/.gitconfig', errors='ignore')  }}"
-      private: no
-
-    - name: workemail
-      prompt: 'What is your work email?'
-      default: "{{ lookup('ini', 'email section=user file=~/.gitconfig', errors='ignore')  }}"
-      private: no
-
-    - name: gitemail
-      prompt: 'What is your git email?'
-      default: "{{ lookup('ini', 'email section=user file=~/.gitconfig', errors='ignore') }}"
-      private: no
-
-    - name: gitname
-      prompt: 'What is your git name?'
-      default: "{{ lookup('ini', 'name section=user file=~/.gitconfig', errors='ignore', default='Wouter Schoot') | default('Wouter Schoot') }}"
-      private: no
-
   tasks:
     - name: mkdir .dotfiles
       file:
