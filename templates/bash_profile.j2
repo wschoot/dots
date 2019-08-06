@@ -91,9 +91,9 @@ function ssl_csr_hash() { openssl req -noout -modulus -in "$@" | openssl md5 ;}
 
 stty -ixon
 
-#set -- $SSH_CONNECTION
+set -- $SSH_CONNECTION
 # touch ~/.tmux for autotmux
-if [[ $PS1 && $SSH_TTY && -z $TMUX && $1 != $3 && -r ~/.tmux ]]; then
+if [[ $PS1 && $SSH_TTY && -z $TMUX && $1 != $3 && -r ~/.autotmux ]]; then
     (tmux attach || tmux new-session)
 fi
 
