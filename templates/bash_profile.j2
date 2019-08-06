@@ -1,17 +1,17 @@
 #!/bin/bash
 export LC_ALL="en_US.UTF-8"
+
 #source bash-completion if it exists
 [ -f /usr/local/share/bash-completion/bash_completion ] && source /usr/local/share/bash-completion/bash_completion
 
-#source git-prompt and completion
-[ -f /usr/share/doc/git/contrib/completion/git-prompt.sh ] && source /usr/share/doc/git/contrib/completion/git-prompt.sh
+#source git-completion
 [ -f /usr/share/doc/git/contrib/completion/git-completion.bash ]  && source /usr/share/doc/git/contrib/completion/git-completion.bash
 
 # add local and python bin dirs to path
 export PATH="$HOME/.bin/:$HOME/.local/bin/:$HOME/bin/:$PATH"
 
-#shorten paths to max 2
-export PROMPT_DIRTRIM=2
+#shorten paths to max 3
+export PROMPT_DIRTRIM=3
 
 export EDITOR='vim'
 
@@ -43,7 +43,7 @@ export PACKER_LOG_PATH=packer.log
 export LPASS_AGENT_TIMEOUT=0
 
 # ssh auth
-export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+[ -z $SSH_AUTH_SOCK= ] && export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
 
 #aliases
 alias ack='ack --pager="less -FRSX"'
@@ -89,14 +89,14 @@ function ssl_key_hash() { openssl rsa -noout -modulus -in "$@" | openssl md5 ;}
 function ssl_cert_hash() { openssl x509 -noout -modulus -in "$@" | openssl md5 ;}
 function ssl_csr_hash() { openssl req -noout -modulus -in "$@" | openssl md5 ;}
 
-
-#stty -ixon
+stty -ixon
 
 #set -- $SSH_CONNECTION
-#if [[ $PS1 && $SSH_TTY && -z $TMUX && $1 != $3 && ! -r ~/.notmux ]]; then
-#    (tmux attach || tmux new-session)
-    #test -z "$TMUX" && (tmux attach -t0 || tmux new-session)
-#fi
+# touch ~/.tmux for autotmux
+if [[ $PS1 && $SSH_TTY && -z $TMUX && $1 != $3 && -r ~/.tmux ]]; then
+    (tmux attach || tmux new-session)
+fi
+
 determine_git_branch () {
   type git > /dev/null 2>&1 || return 0
   local GIT_BRANCH="$(git symbolic-ref --short -q HEAD 2> /dev/null || true)"
