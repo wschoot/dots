@@ -14,10 +14,6 @@
       private: no
 
   tasks:
-    - name: install pip resources
-      pip:
-        name: ansible-lint
-
     - name: mkdir .dotfiles
       file:
         path: ~/.dotfiles
