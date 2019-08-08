@@ -90,7 +90,8 @@ function ssl_key_hash() { openssl rsa -noout -modulus -in "$@" | openssl md5 ;}
 function ssl_cert_hash() { openssl x509 -noout -modulus -in "$@" | openssl md5 ;}
 function ssl_csr_hash() { openssl req -noout -modulus -in "$@" | openssl md5 ;}
 
-stty -ixon
+# https://sanctum.geek.nz/arabesque/terminal-annoyances/
+[ -z $GDMSESSION ] && stty -ixon
 
 set -- $SSH_CONNECTION
 # touch ~/.tmux for autotmux
@@ -176,3 +177,6 @@ git_prompt() {
 # prompt. Tweak as you see fit, or just stick "$(git_prompt)" into your
 # favorite prompt.
 PS1='$debian_chroot\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w$(git_prompt)\[\033[00m\]\$ '
+if $(lsusb | grep -q ePass2003) && ! ssh-add -q -l > /dev/null; then
+	~/.local/bin/ssh-add-token
+fi
