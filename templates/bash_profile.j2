@@ -177,6 +177,6 @@ git_prompt() {
 # prompt. Tweak as you see fit, or just stick "$(git_prompt)" into your
 # favorite prompt.
 PS1='$debian_chroot\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w$(git_prompt)\[\033[00m\]\$ '
-if $(lsusb | grep -q ePass2003) && ! ssh-add -q -l > /dev/null; then
+if $((which lsusb 2> /dev/null && lsusb) | grep -q ePass2003) && ! ssh-add -q -l > /dev/null; then
 	~/.local/bin/ssh-add-token
 fi
