@@ -34,7 +34,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 export GROFF_NO_SGR=1
 
 #less with more colors
-export LESS='-R'
+export LESS='--quit-if-one-screen --ignore-case --status-column --LONG-PROMPT --RAW-CONTROL-CHARS --HILITE-UNREAD --tabs=4 --no-init --window=-4'
 
 #packer settings
 export PACKER_LOG=1
@@ -70,7 +70,7 @@ alias userpw="grub-crypt --sha-512"
 export PYTHONSTARTUP=~/.pyrc
 
 function ssldate () {
-    openssl s_client -connect $1:443|openssl x509 -dates -noout
+	openssl s_client -connect $1:443|openssl x509 -dates -noout
 }
 
 function mw () {
