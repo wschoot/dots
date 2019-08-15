@@ -10,6 +10,9 @@ export LC_ALL="en_US.UTF-8"
 [ -f /usr/share/doc/git/contrib/completion/git-completion.bash ]  && source /usr/share/doc/git/contrib/completion/git-completion.bash
 [ -f /usr/share/bash-completion/completions/git ] && source /usr/share/bash-completion/completions/git
 
+# vagrant complete
+[ -f /opt/vagrant/embedded/gems/*/gems/vagrant-*/contrib/bash/completion.sh ] && source /opt/vagrant/embedded/gems/*/gems/vagrant-*/contrib/bash/completion.sh
+
 # add local and python bin dirs to path
 export PATH="$HOME/.bin/:$HOME/.local/bin/:$HOME/bin/:$PATH"
 
