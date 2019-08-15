@@ -1,4 +1,4 @@
-# {{ ansible_managed }}, ran by {{ template_uid }}@{{ template_host }} on {{ template_run_date }}
+# {{ ansible_managed }}, ran by {{ template_uid }}@{{ template_host }}
 
 export LC_ALL="en_US.UTF-8"
 
@@ -177,8 +177,13 @@ git_prompt() {
 # prompt. Tweak as you see fit, or just stick "$(git_prompt)" into your
 # favorite prompt.
 PS1='$debian_chroot\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w$(git_prompt)\[\033[00m\]\$ '
-if $((which lsusb 2> /dev/null && lsusb) | grep -q ePass2003) && ! ssh-add -q -l > /dev/null && ! [ -z $SHELL ] ; then
-	~/.local/bin/ssh-add-token
+
+if $((which lsusb 2> /dev/null && lsusb) | grep -q ePass2003) && \
+	! ssh-add -q -l >/dev/null 2>&1 && \
+	[[ -n $SESSION_MANAGER ]] && \
+	[[ -n $TERM ]] ; then
+		env | sort 2>&1 > /home/wouter/$$.tmp
+		~/.local/bin/ssh-add-token
 fi
 
 if command -v kubectl > /dev/null 2>&1; then
