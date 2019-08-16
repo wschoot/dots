@@ -187,7 +187,6 @@ if $((which lsusb 2> /dev/null && lsusb) | grep -q ePass2003) && \
 	! ssh-add -q -l >/dev/null 2>&1 && \
 	[[ -n $SESSION_MANAGER ]] && \
 	[[ -n $TERM ]] ; then
-		env | sort 2>&1 > /home/wouter/$$.tmp
 		~/.local/bin/ssh-add-token
 fi
 
