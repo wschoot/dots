@@ -196,3 +196,11 @@ if command -v kubectl > /dev/null 2>&1; then
 	alias k=kubectl
 	complete -F __start_kubectl k
 fi
+
+function geefvm () {
+  DIR=$(mktemp -d)
+  cd $DIR
+  vagrant init centos/7 && vagrant up && vagrant ssh && vagrant destroy
+  cd
+  rm -r $DIR
+}
