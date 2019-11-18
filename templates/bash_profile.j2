@@ -48,8 +48,12 @@ export PACKER_LOG_PATH=packer.log
 #prevent lpass-cli from exiting
 export LPASS_AGENT_TIMEOUT=0
 
-# ssh auth
-[ -z $SSH_AUTH_SOCK ] && export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+  eval `ssh-agent`
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+ssh-add -l > /dev/null || ssh-add
 
 #aliases
 alias ack='ack --pager="less -FRSX"'
