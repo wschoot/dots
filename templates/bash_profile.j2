@@ -61,7 +61,6 @@ fi
 alias ack='ack --pager="less -FRSX"'
 alias ag='ag --pager="less -FRSX"'
 alias cp='cp -i'
-alias diff=colordiff
 alias gb="cd \$(git root)"
 alias goaccess='goaccess -p ~/.goaccessrc'
 alias http='http --all --follow --max-redirects=5 --headers --style monokai'
@@ -74,6 +73,7 @@ alias tree="tree -a -I '.git|.DS_Store'"
 alias c='DISPLAY=:0 xclip -selection clipboard'
 alias v='DISPLAY=:0 xclip -o'
 alias dockerclean='docker system prune --volumes'
+alias ack=rgrep
 
 # for user password
 alias userpw="grub-crypt --sha-512"
