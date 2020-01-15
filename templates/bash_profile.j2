@@ -200,7 +200,11 @@ fi
 if command -v kubectl > /dev/null 2>&1; then
 	source <(kubectl completion bash)
 	alias k=kubectl
+	alias kd="kubectl --context dev-admin"
+	alias kp="kubectl --context prod-admin"
 	complete -F __start_kubectl k
+	complete -F __start_kubectl kp
+	complete -F __start_kubectl kd
 fi
 
 function geefvm () {
