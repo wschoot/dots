@@ -56,3 +56,5 @@ set-window-option -g xterm-keys on
 
 # https://superuser.com/a/326592
 set -g terminal-overrides 'xterm*:smcup@:rmcup@'
+bind-key          S choose-window "join-pane -v -s "%%""
+bind-key          V choose-window "join-pane -h -s "%%""
