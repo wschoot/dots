@@ -8,6 +8,18 @@
         path: ~/.dotfiles
         state: directory
 
+    - name: gitignore
+      template:
+        src: templates/gitignore.j2
+        dest: ~/.dotfiles/gitignore
+
+    - name: symlink gitignore
+      file:
+        src: ~/.dotfiles/gitignore
+        dest: ~/.gitignore
+        state: link
+        force: yes
+
     - name: gitconfig
       template:
         src: templates/gitconfig.j2
