@@ -14,7 +14,7 @@ autosetuprebase = always
 [alias]
 br = branch -vv
 lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-up = !git pull --rebase --autostash && git submodule update --remote
+up = !git pull --rebase --autostash && git submodule update --remote --recursive --init
 root = !pwd
 st = status
 co = checkout
