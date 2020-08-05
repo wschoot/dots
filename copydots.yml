@@ -2,6 +2,11 @@
 - hosts: localhost
   become: false
   gather_facts: no
+  module_defaults:
+    template:
+      backup: true
+    file:
+      force: yes
   tasks:
     - name: mkdir .dotfiles
       file:
@@ -18,7 +23,6 @@
         src: ~/.dotfiles/gitignore
         dest: ~/.gitignore
         state: link
-        force: yes
 
     - name: gitconfig
       template:
@@ -30,7 +34,6 @@
         src: ~/.dotfiles/gitconfig
         dest: ~/.gitconfig
         state: link
-        force: yes
 
     - name: vimrc
       template:
@@ -42,7 +45,6 @@
         src: ~/.dotfiles/vimrc
         dest: ~/.vimrc
         state: link
-        force: yes
 
     - name: tmux
       template:
@@ -54,7 +56,6 @@
         src: ~/.dotfiles/tmux.conf
         dest: ~/.tmux.conf
         state: link
-        force: yes
 
     - name: bash_profile
       template:
@@ -66,14 +67,12 @@
         src: ~/.dotfiles/bash_profile
         dest: ~/.bashrc
         state: link
-        force: yes
-    - name: symlink bash_profile
 
+    - name: symlink bash_profile
       file:
         src: ~/.dotfiles/bash_profile
         dest: ~/.bash_profile
         state: link
-        force: yes
 
     - name: run vim -r to prep the env
       command: vim -r
