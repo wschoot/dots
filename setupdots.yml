@@ -18,6 +18,7 @@
       package:
         name:
           - python-pip
+          - python3-pip
         state: present
       when: ansible_distribution == 'Ubuntu'
 
