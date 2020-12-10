@@ -104,6 +104,7 @@ function ssl_cert_hash() { openssl x509 -noout -modulus -in "$@" | openssl md5 ;
 function ssl_csr_hash() { openssl req -noout -modulus -in "$@" | openssl md5 ;}
 function ssl_read_cert() { openssl x509 -in "$@" -text -noout ;}
 function epoch() { date -d @"$@" ;}
+function labvnc() { vncviewer $(ssh qm vmctl info "$@" 2>&1 | grep ^VNC | perl -pe 's#^VNC reachable at vnc://(.*?)/ .*$#$1#') ;}
 # https://sanctum.geek.nz/arabesque/terminal-annoyances/
 [ -z $GDMSESSION ] && stty -ixon
 
