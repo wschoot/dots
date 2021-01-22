@@ -77,11 +77,11 @@ alias ack=rgrep
 alias weechat="TERM=screen-256color /opt/weechat/bin/weechat"
 if command -v ssh-A > /dev/null 2>&1; then
 	alias ssh="ssh-A"
+	export SSH_A_LOCK_TIME=3600
 fi
 
 # for user password
 alias userpw="grub-crypt --sha-512"
-
 
 export PYTHONSTARTUP=~/.pyrc
 
