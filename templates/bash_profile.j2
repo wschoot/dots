@@ -74,7 +74,6 @@ alias c='DISPLAY=:0 xclip -selection clipboard'
 alias v='DISPLAY=:0 xclip -o'
 alias dockerclean='docker system prune --volumes'
 alias ack=rgrep
-alias weechat="TERM=screen-256color weechat"
 
 # for user password
 alias userpw="grub-crypt --sha-512"
@@ -196,7 +195,11 @@ if $((which lsusb 2> /dev/null && lsusb) | grep -q ePass2003) && \
 	! ssh-add -q -l >/dev/null 2>&1 && \
 	[[ -n $SESSION_MANAGER ]] && \
 	[[ -n $TERM ]] ; then
-		~/.local/bin/ssh-add-token
+		~/.local/bin/ssh-add-token;
+		sudo systemctl restart systemd-networkd;
+		sudo apt update;
+		sudo apt -y dist-upgrade;
+		sudo apt -y autoremove
 fi
 
 if command -v kubectl > /dev/null 2>&1; then
@@ -209,10 +212,17 @@ if command -v kubectl > /dev/null 2>&1; then
 	complete -F __start_kubectl kd
 fi
 
-function geefvm () {
+function geefvmc () {
   DIR=$(mktemp -d)
   cd $DIR
   vagrant init centos/7 && vagrant up && vagrant ssh && vagrant destroy
+  cd
+  rm -r $DIR
+}
+function geefvmu () {
+  DIR=$(mktemp -d)
+  cd $DIR
+  vagrant init generic/ubuntu2010 && vagrant up && vagrant ssh && vagrant destroy
   cd
   rm -r $DIR
 }
