@@ -107,6 +107,8 @@ function labvnc() { vncviewer $(ssh qm vmctl info "$@" 2>&1 | grep ^VNC | perl -
 # https://paste.ds0.nl/
 6p() { curl -s -F "content=<${1--}" -F ttl=604800 -w "%{redirect_url}\n" -o /dev/null https://paste.ds0.nl/; }
 
+function trailing_whitespaces() { egrep --recursive --files-with-matches " +$" * ;}
+
 # https://sanctum.geek.nz/arabesque/terminal-annoyances/
 [ -z $GDMSESSION ] && stty -ixon
 
