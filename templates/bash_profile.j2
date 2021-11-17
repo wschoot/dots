@@ -218,7 +218,14 @@ if command -v kubectl > /dev/null 2>&1; then
 	complete -F __start_kubectl kd
 fi
 
-function geefvmc () {
+function geefvmc8 () {
+  DIR=$(mktemp -d)
+  cd $DIR
+  vagrant init centos/8 && vagrant up && vagrant ssh && vagrant destroy
+  cd
+  rm -r $DIR
+}
+function geefvmc7 () {
   DIR=$(mktemp -d)
   cd $DIR
   vagrant init centos/7 && vagrant up && vagrant ssh && vagrant destroy
