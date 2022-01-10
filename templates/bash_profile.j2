@@ -228,7 +228,7 @@ function geefvmc () {
 function geefvmu () {
   DIR=$(mktemp -d)
   cd $DIR
-  vagrant init generic/ubuntu2010 && vagrant up && vagrant ssh && vagrant destroy
+  vagrant init generic/ubuntu2110 && vagrant up && vagrant ssh && vagrant destroy
   cd
   rm -r $DIR
 }
