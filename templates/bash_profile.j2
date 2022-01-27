@@ -16,8 +16,10 @@ export LC_ALL="en_US.UTF-8"
 # add local and python bin dirs to path
 export PATH="/opt/homebrew/bin:$HOME/.bin/:$HOME/.local/bin/:$HOME/bin/:$PATH"
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if command -v brew > /dev/null 2>&1; then
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  	. $(brew --prefix)/etc/bash_completion
+  fi
 fi
 
 #shorten paths to max 5
@@ -56,12 +58,12 @@ export PACKER_LOG_PATH=packer.log
 export LPASS_AGENT_TIMEOUT=0
 
 if [[ -r ~/.autossh ]]; then
-	if [ ! -S ~/.ssh/ssh_auth_sock ]; then
-		eval `ssh-agent`
-		ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-	fi
-	export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-	ssh-add -l > /dev/null || ssh-add
+  if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+  	eval `ssh-agent`
+  	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+  fi
+  export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+  ssh-add -l > /dev/null || ssh-add
 fi
 
 #aliases
@@ -88,7 +90,7 @@ alias userpw="grub-crypt --sha-512"
 export PYTHONSTARTUP=~/.pyrc
 
 function ssldate () {
-	openssl s_client -connect $1:443|openssl x509 -dates -noout
+  openssl s_client -connect $1:443|openssl x509 -dates -noout
 }
 
 function mw () {
@@ -205,24 +207,24 @@ git_prompt() {
 PS1='$debian_chroot\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w$(git_prompt)\[\033[00m\]\$ '
 
 if $((which lsusb 2> /dev/null && lsusb) | grep -q ePass2003) && \
-	! ssh-add -q -l >/dev/null 2>&1 && \
-	[[ -n $SESSION_MANAGER ]] && \
-	[[ -n $TERM ]] ; then
-		~/.local/bin/ssh-add-token;
-		sudo systemctl restart systemd-networkd;
-		sudo apt update;
-		sudo apt -y dist-upgrade;
-		sudo apt -y autoremove
+  ! ssh-add -q -l >/dev/null 2>&1 && \
+  [[ -n $SESSION_MANAGER ]] && \
+  [[ -n $TERM ]] ; then
+  	~/.local/bin/ssh-add-token;
+  	sudo systemctl restart systemd-networkd;
+  	sudo apt update;
+  	sudo apt -y dist-upgrade;
+  	sudo apt -y autoremove
 fi
 
 if command -v kubectl > /dev/null 2>&1; then
-	source <(kubectl completion bash)
-	alias k=kubectl
-	alias kd="kubectl --context dev-admin"
-	alias kp="kubectl --context prod-admin"
-	complete -F __start_kubectl k
-	complete -F __start_kubectl kp
-	complete -F __start_kubectl kd
+  source <(kubectl completion bash)
+  alias k=kubectl
+  alias kd="kubectl --context dev-admin"
+  alias kp="kubectl --context prod-admin"
+  complete -F __start_kubectl k
+  complete -F __start_kubectl kp
+  complete -F __start_kubectl kd
 fi
 
 function geefvmc8 () {
