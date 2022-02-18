@@ -18,7 +18,7 @@ export PATH="/opt/homebrew/bin:$HOME/.bin/:$HOME/.local/bin/:$HOME/bin/:$PATH"
 
 if command -v brew > /dev/null 2>&1; then
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  	. $(brew --prefix)/etc/bash_completion
+    . $(brew --prefix)/etc/bash_completion
   fi
 fi
 
@@ -59,8 +59,8 @@ export LPASS_AGENT_TIMEOUT=0
 
 if [[ -r ~/.autossh ]]; then
   if [ ! -S ~/.ssh/ssh_auth_sock ]; then
-  	eval `ssh-agent`
-  	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+    eval `ssh-agent`
+    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
   fi
   export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
   ssh-add -l > /dev/null || ssh-add
@@ -82,7 +82,6 @@ alias tree="tree -a -I '.git|.DS_Store'"
 alias c='DISPLAY=:0 xclip -selection clipboard'
 alias v='DISPLAY=:0 xclip -o'
 alias dockerclean='docker system prune --volumes'
-alias ack=rgrep
 
 # for user password
 alias userpw="grub-crypt --sha-512"
@@ -210,11 +209,11 @@ if $((which lsusb 2> /dev/null && lsusb) | grep -q ePass2003) && \
   ! ssh-add -q -l >/dev/null 2>&1 && \
   [[ -n $SESSION_MANAGER ]] && \
   [[ -n $TERM ]] ; then
-  	~/.local/bin/ssh-add-token;
-  	sudo systemctl restart systemd-networkd;
-  	sudo apt update;
-  	sudo apt -y dist-upgrade;
-  	sudo apt -y autoremove
+    ~/.local/bin/ssh-add-token;
+    sudo systemctl restart systemd-networkd;
+    sudo apt update;
+    sudo apt -y dist-upgrade;
+    sudo apt -y autoremove
 fi
 
 if command -v kubectl > /dev/null 2>&1; then
