@@ -226,6 +226,10 @@ if command -v kubectl > /dev/null 2>&1; then
   complete -F __start_kubectl kd
 fi
 
+if command -v bash > /dev/null 2>&1; then
+	export SHELL=$(command -v bash)
+fi
+
 function geefvmc8 () {
   DIR=$(mktemp -d)
   cd $DIR
@@ -247,3 +251,5 @@ function geefvmu () {
   cd
   rm -r $DIR
 }
+# Weechat
+export TERM=xterm-256color
