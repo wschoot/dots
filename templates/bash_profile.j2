@@ -111,6 +111,7 @@ function ssl_csr_hash() { openssl req -noout -modulus -in "$@" | openssl md5 ;}
 function ssl_read_cert() { openssl x509 -in "$@" -text -noout ;}
 function epoch() { date -d @"$@" ;}
 function labvnc() { vncviewer $(ssh qm vmctl info "$@" 2>&1 | grep ^VNC | perl -pe 's#^VNC reachable at vnc://(.*?)/ .*$#$1#') ;}
+function kluis() { op item get "$@" --format=json --vault Blueprint|jq '.fields[].label' -r | sort ;}
 
 # https://paste.ds0.nl/
 6p() { curl -s -F "content=<${1--}" -F ttl=604800 -w "%{redirect_url}\n" -o /dev/null https://paste.ds0.nl/; }
