@@ -160,6 +160,9 @@ endif
 "Set syntax to shell for commands coming from ^X^E
 autocmd BufRead,BufNewFile /var/*/bash-fc.* set syntax=sh
 
+"Fix syntax for inventory-files
+autocmd BufRead,BufNewFile inventory set syntax=yaml
+
 "Reread vimrc on save
 autocmd bufwritepost .vimrc source %
 set noai
