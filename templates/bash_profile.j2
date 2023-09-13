@@ -14,7 +14,7 @@ export LC_ALL="en_US.UTF-8"
 [ -f /opt/vagrant/embedded/gems/*/gems/vagrant-*/contrib/bash/completion.sh ] && source /opt/vagrant/embedded/gems/*/gems/vagrant-*/contrib/bash/completion.sh
 
 # add local and python bin dirs to path
-export PATH="/opt/homebrew/bin:$HOME/.bin/:$HOME/.local/bin/:$HOME/bin/:$PATH"
+export PATH="/opt/homebrew/bin:$HOME/.bin/:$HOME/.local/bin/:$HOME/bin/:$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 if command -v brew > /dev/null 2>&1; then
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
