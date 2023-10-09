@@ -115,6 +115,21 @@ function labvnc() { vncviewer $(ssh qm vmctl info "$@" 2>&1 | grep ^VNC | perl -
 function kluis() { op item get "$@" --format=json --vault Blueprint|jq '.fields[].label' -r | sort ;}
 function nssh() { ssh $(ansible-inventory --host "$@" | jq -r ".ansible_host") ;}
 
+function __curl() {
+  read proto server path <<<$(echo ${1//// })
+  DOC=/${path// //}
+  HOST=${server//:*}
+  PORT=${server//*:}
+  [[ x"${HOST}" == x"${PORT}" ]] && PORT=80
+
+  exec 3<>/dev/tcp/${HOST}/$PORT
+  echo -en "GET ${DOC} HTTP/1.0\r\nHost: ${HOST}\r\n\r\n" >&3
+  (while read line; do
+   [[ "$line" == $'\r' ]] && break
+  done && cat) <&3
+  exec 3>&-
+}
+
 # https://paste.ds0.nl/
 6p() { curl -s -F "content=<${1--}" -F ttl=604800 -w "%{redirect_url}\n" -o /dev/null https://paste.ds0.nl/; }
 
